@@ -1,26 +1,46 @@
-def clean(floor, goal):
-    for i in range(3):
-        if floor == goal:
-            print("attained goal state")
-            print_floor(floor)
-            return
-        if floor[i] == goal[i]:
-            continue
-        if floor[i] == 1:
-            print("STATUS:DIRTY")
-            print_floor(floor)
-            floor[i] = 0
+def clean(floor):
+    m = len(floor)#floor
+    n = len(floor[0])#room
+    for i in range(m):
+        if i % 2 == 0:
+            for j in range(n):
+                if(floor[i][j] == 1):
+                    print("STATUS:DIRTY")
+                    print_floor(floor, i, j)
+                    floor[i][j] = 0
+                else:
+                    print("STATUS:CLEAN")
+                    print_floor(floor, i, j)
+
         else:
-            print("STATUS:CLEAN")
-            print_floor(floor)
+            for j in range(n-1, -1, -1):
+                if floor[i][j] == 1:
+                    print("STATUS:DIRTY")
+                    print_floor(floor, i, j)
+                    floor[i][j] = 0
+                else:
+                    print("STATUS:CLEAN")
+                    print_floor(floor, i, j)
+    print("STATUS: ALL ROOMS CLEANED")
+    print_floor(floor, i, j)
+    return
 
 
-def print_floor(floor):
+def print_floor(floor, row, col):  # row, col represent the current vacuum cleaner position
+    print("FLOOR :", row, " ROOM :", col)
     print(floor)
     print("-----------------")
 
 
 # Test 1
-room = [0, 0]
-goal = [0, 0]
-clean(room, goal)
+floor1 = [[1, 0, 0, 0],
+          [0, 1, 0, 1],
+          [1, 0, 1, 1]]
+clean(floor1)
+
+# Test 2
+# floor2 = [[1, 1, 0, 0, 1, 0, 0],
+#           [0, 0, 0, 1, 0, 0, 0],
+#           [0, 1, 1, 1, 1, 1, 1],
+#           [0, 1, 0, 1, 0, 1, 0]]
+# clean(floor2)
